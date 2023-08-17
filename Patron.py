@@ -1,16 +1,14 @@
-# Se importan las funciones para poder leer el excel
-import Lectura_xlsx
+import Lectura
 
-def verificarCantidades(matrizPatron, matrizSuministro, matrizCarga):
+def verificarCantidades(matrizPatron,matrizSuministro):
     ADisponible = 0
     BDisponible = 0
     CDisponible = 0
-    Error = 0 # Se define 0 como que no hay error.
     # Se define la disponibilidad de cada material
     # Se analiza el material del suministro
     for fila in range(5):
         for columna in range(5):
-            objeto = matrizSuministro[fila][columna]
+            objeto = matrizPatron[fila][columna]
             if (objeto == "A"):
                 ADisponible = ADisponible + 1
             elif (objeto == "B"):
@@ -18,19 +16,8 @@ def verificarCantidades(matrizPatron, matrizSuministro, matrizCarga):
             elif (objeto == "C"):
                 CDisponible = CDisponible + 1
     # Se analiza el material en la plataforma de carga
-    for fila in range(5):
-        for columna in range(5):
-            objeto = matrizCarga[fila][columna]
-            if (objeto == "A"):
-                ADisponible = ADisponible + 1
-            elif (objeto == "B"):
-                BDisponible = BDisponible + 1
-            elif (objeto == "C"):
-                CDisponible = CDisponible + 1
-    # Se define si el material basta para el patron deseado
-    for fila in range(5):
-        for columna in range(5):
-            objeto = matrizPatron[fila][columna]
+    for fila in range(25):
+            objeto = matrizSuministro[fila]
             if (objeto == "A"):
                 ADisponible = ADisponible - 1
             elif (objeto == "B"):
@@ -46,35 +33,63 @@ def verificarCantidades(matrizPatron, matrizSuministro, matrizCarga):
         print ("Se ha suministrado la cantidad correcta de material :)")
         return (Error)
 
-def AcomodarPatron(matrizPatron, matrizSuministro, matrizCarga):
-    ZonaBloqueada = 1 # Esta va a ser la señal que determina que la zona está libre
-    if (ZonaBloqueada == 1):
-        Error = 202 # Se define el error 202 para bloqueos en la zona
-    return (Error)
+def encontrarPosicion(matrizPatron, matrizSuministro):
+    matrizPosiciones = [[None for _ in range(5)] for _ in range(5)]
+    # Se seleccionan los objetos en el suministro uno por uno
+    for fila in range(25):
+            objeto = matrizSuministro[fila] # objeto es un string (A, B, C o None)
+            if (objeto != None):
+                for fila in range(1, 6):
+                    for columna in range(1, 6):
+                        if celda == "A":
+                            matrizPatron[fila-1][columna-1] = "A"
+                        elif celda == "B":
+                            matrizPatron[fila-1][columna-1] = "B"
+                        elif celda == "C":
+                            matrizPatron[fila-1][columna-1] = "C"
+                        else:
+                            matrizPatron[fila-1][columna-1] = None
+                #recogerObjeto()
+                print("Se recoge el objeto del suministro")
+                #dejarObjeto(filaObjetivo, columnaObjetivo)
+                print("Se deja el objeto " + objeto + " en la posición: " + str(filaObjetivo) + str(columnaObjetivo))
+    return
 
-def Patron():
-    Error = 0 # Se inicializa el error en 0.
-    archivo = "archivo.xlsx"  # Reemplaza con la ruta a tu archivo XLSX o CSV
-    matrizPatron, matrizSuministro, matrizCarga, Error = Lectura_xlsx.leer_archivo(archivo)
+def AcomodarPatron(matrizPatron, matrizSuministro):
+    # Se seleccionan los objetos en el suministro uno por uno
+    for fila in range(25):
+            objeto = matrizSuministro[fila] # objeto es un string (A, B, C o None)
+            if (objeto != None):
+                filaObjetivo, columnaObjetivo = encontrarPosicion(objeto)
+                #recogerObjeto()
+                print("Se recoge el objeto del suministro")
+                #dejarObjeto(filaObjetivo, columnaObjetivo)
+                print("Se deja el objeto " + objeto + " en la posición: " + str(filaObjetivo) + str(columnaObjetivo))
+    return
 
-    # Se verifica que la lectura haya sido correcta
-    if (Error == 0):
-        Error = verificarCantidades(matrizPatron, matrizSuministro, matrizCarga)
-    else:
-        print ("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
+def meteodoPatron():
+    # Se inicializa el error en 0.
+    Error = 0 
+    
+    # Se leen los datos proporcionados por el usuario:
+    archivoPatron = "archivoPatron.xlsx"  # Reemplaza con la ruta a tu archivo XLSX o CSV
+    archivoSuministro = "archivoSuministro.xlsx"  # Reemplaza con la ruta a tu archivo XLSX o CSV
+    matrizPatron, Error = Lectura.leerPatron(archivoPatron)
+    if (Error != 0):
+        print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
         return
-
-    # Se verifica que la cantidad de material sea el adecuado
-    if (Error == 0):
-        #Se procede a acomodar el material de acuerdo al patron
-        Error = AcomodarPatron(matrizPatron, matrizSuministro, matrizCarga)
-        if (Error == 0):
-            return
-        else:
-            print ("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
-            return
-    else:
-        print ("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
+    matrizSuministro, Error = Lectura.leerSuministro(archivoSuministro)
+    if (Error != 0):
+        print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
         return
+    
+    # Se verifica que la cantidad de objetos necesarios sea igual a la cantidad suministrada:
+    Error = verificarCantidades(matrizPatron, matrizSuministro)
+    if (Error != 0):
+        print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
+        return
+    AcomodarPatron(matrizPatron, matrizSuministro)
+    print("Se concluyó con éxito el método patrón :)")
+    # Se procede a acomodar los objetos en su lugar respectivo:
 
-Patron()
+meteodoPatron()
