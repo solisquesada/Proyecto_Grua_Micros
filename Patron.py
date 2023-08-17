@@ -4,8 +4,7 @@ def verificarCantidades(matrizPatron,matrizSuministro):
     ADisponible = 0
     BDisponible = 0
     CDisponible = 0
-    # Se define la disponibilidad de cada material
-    # Se analiza el material del suministro
+    # Se define la cantidad de objetos necesarios para el patron
     for fila in range(5):
         for columna in range(5):
             objeto = matrizPatron[fila][columna]
@@ -15,7 +14,8 @@ def verificarCantidades(matrizPatron,matrizSuministro):
                 BDisponible = BDisponible + 1
             elif (objeto == "C"):
                 CDisponible = CDisponible + 1
-    # Se analiza el material en la plataforma de carga
+    # Se repasa el material en el suministro para ver que
+    # concuerde con el material necesario.
     for fila in range(25):
             objeto = matrizSuministro[fila]
             if (objeto == "A"):
@@ -34,12 +34,19 @@ def verificarCantidades(matrizPatron,matrizSuministro):
         return (0)
 
 def encontrarPosicion(matrizPatron, matrizSuministro):
+    # Se define la matrizPosiciones como una matriz de tuplas que contienen los objetos
+    # en el orden del suministro y la posición a la que hay que levar cada objeto.
     matrizPosiciones = [None for _ in range(25)]
+    # Se recorre la matriz patrón
     for filaObjetivo in range(0, 5):
         for columnaObjetivo in range(0, 5):
             objeto = matrizPatron[filaObjetivo][columnaObjetivo]
+            # Para los lugares donde hay un objeto en el patrón se encuentra cual objeto
+            # del suministro puede cumplir.
             if (objeto != None):
                 print("Objeto: " + objeto)
+                # Se recorre la matriz suministro verificando que se trate de un material
+                # que no se haya utilizado aún.
                 for fila in range(25):
                     if (matrizSuministro[fila]==objeto and matrizPosiciones[fila]==None):
                         print("Se encontró la ubiación ideal del objeto en: ")
@@ -51,8 +58,10 @@ def encontrarPosicion(matrizPatron, matrizSuministro):
     return (matrizPosiciones)
 
 def AcomodarPatron(matrizPatron, matrizSuministro):
+    #Se pide la matriz con el orden del suministrio y donde van ubicados los objetos.
     matrizPosiciones = encontrarPosicion(matrizPatron, matrizSuministro)
     for fila in range (25):
+        #Se recorre el suministro, agarrando cada objeto y llevandolo al lugar correcto.
         objeto=matrizSuministro[fila]
         if (objeto!=None):
             #recogerObjeto()
