@@ -31,40 +31,34 @@ def verificarCantidades(matrizPatron,matrizSuministro):
         return (Error)
     else:
         print ("Se ha suministrado la cantidad correcta de material :)")
-        return (Error)
+        return (0)
 
 def encontrarPosicion(matrizPatron, matrizSuministro):
-    matrizPosiciones = [[None for _ in range(5)] for _ in range(5)]
-    # Se seleccionan los objetos en el suministro uno por uno
-    for fila in range(25):
-            objeto = matrizSuministro[fila] # objeto es un string (A, B, C o None)
+    matrizPosiciones = [None for _ in range(25)]
+    for filaObjetivo in range(0, 5):
+        for columnaObjetivo in range(0, 5):
+            objeto = matrizPatron[filaObjetivo][columnaObjetivo]
             if (objeto != None):
-                for fila in range(1, 6):
-                    for columna in range(1, 6):
-                        if celda == "A":
-                            matrizPatron[fila-1][columna-1] = "A"
-                        elif celda == "B":
-                            matrizPatron[fila-1][columna-1] = "B"
-                        elif celda == "C":
-                            matrizPatron[fila-1][columna-1] = "C"
-                        else:
-                            matrizPatron[fila-1][columna-1] = None
-                #recogerObjeto()
-                print("Se recoge el objeto del suministro")
-                #dejarObjeto(filaObjetivo, columnaObjetivo)
-                print("Se deja el objeto " + objeto + " en la posición: " + str(filaObjetivo) + str(columnaObjetivo))
-    return
+                print("Objeto: " + objeto)
+                for fila in range(25):
+                    print("Revisando la fila " + str(fila+1) + " de la matriz suministro")
+                    if (matrizSuministro[fila]==objeto and matrizPosiciones[fila]==None):
+                        print("Se encontró el objeto")
+                        print(filaObjetivo)
+                        print(columnaObjetivo)
+                        matrizPosiciones[fila]=(objeto,filaObjetivo,columnaObjetivo)
+                        break
+    Lectura.imprimir_matriz(matrizPosiciones)
+    return (matrizPosiciones)
 
 def AcomodarPatron(matrizPatron, matrizSuministro):
-    # Se seleccionan los objetos en el suministro uno por uno
-    for fila in range(25):
-            objeto = matrizSuministro[fila] # objeto es un string (A, B, C o None)
-            if (objeto != None):
-                filaObjetivo, columnaObjetivo = encontrarPosicion(objeto)
-                #recogerObjeto()
-                print("Se recoge el objeto del suministro")
-                #dejarObjeto(filaObjetivo, columnaObjetivo)
-                print("Se deja el objeto " + objeto + " en la posición: " + str(filaObjetivo) + str(columnaObjetivo))
+    matrizPosiciones = encontrarPosicion(matrizPatron, matrizSuministro)
+    for fila in range (25):
+        objeto=matrizSuministro[fila]
+        #recogerObjeto()
+        print("Se recoge el objeto del suministro")
+        #dejarObjeto(filaObjetivo, columnaObjetivo)
+        print("Se deja el objeto " + str(matrizPosiciones[fila]))
     return
 
 def meteodoPatron():
