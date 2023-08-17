@@ -41,12 +41,11 @@ def encontrarPosicion(matrizPatron, matrizSuministro):
             if (objeto != None):
                 print("Objeto: " + objeto)
                 for fila in range(25):
-                    print("Revisando la fila " + str(fila+1) + " de la matriz suministro")
                     if (matrizSuministro[fila]==objeto and matrizPosiciones[fila]==None):
-                        print("Se encontró el objeto")
-                        print(filaObjetivo)
-                        print(columnaObjetivo)
-                        matrizPosiciones[fila]=(objeto,filaObjetivo,columnaObjetivo)
+                        print("Se encontró la ubiación ideal del objeto en: ")
+                        print(str(filaObjetivo+1))
+                        print(str(columnaObjetivo+1))
+                        matrizPosiciones[fila]=(objeto,filaObjetivo+1,columnaObjetivo+1)
                         break
     Lectura.imprimir_matriz(matrizPosiciones)
     return (matrizPosiciones)
@@ -55,10 +54,11 @@ def AcomodarPatron(matrizPatron, matrizSuministro):
     matrizPosiciones = encontrarPosicion(matrizPatron, matrizSuministro)
     for fila in range (25):
         objeto=matrizSuministro[fila]
-        #recogerObjeto()
-        print("Se recoge el objeto del suministro")
-        #dejarObjeto(filaObjetivo, columnaObjetivo)
-        print("Se deja el objeto " + str(matrizPosiciones[fila]))
+        if (objeto!=None):
+            #recogerObjeto()
+            print("Se recoge el objeto del suministro")
+            #dejarObjeto(filaObjetivo, columnaObjetivo)
+            print("Se deja el objeto " + str(matrizPosiciones[fila]))
     return
 
 def meteodoPatron():
