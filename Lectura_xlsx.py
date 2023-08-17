@@ -91,4 +91,3 @@ matrizPatron, Error = leerPatron(archivoPatron)
 matrizSuministro, Error = leerSuministro(archivoSuministro)
 imprimir_matriz(matrizPatron)
 imprimir_matriz(matrizSuministro)
-
