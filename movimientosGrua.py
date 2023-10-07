@@ -8,3 +8,7 @@ def grua(xyOrigen, xyDestino, funcion):
         print ("Destino en: " + str(xyDestino))
         print ("Se llevó")
         return ()
+    
+def gruaReal(matrizPosiciones):
+    print("AQUÍ IRÍA LA LÓGICA QUE ACCIONA MOTORES PARA EL ACOMODO")
+    return

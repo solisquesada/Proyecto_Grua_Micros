@@ -33,6 +33,21 @@ def generar_matriz(vector_final):
 
     return matriz, matriz2
 
+def traducirPosicionesPatron(matrizPosiciones):
+    matriz_resultante = []
+    
+    for fila in matrizPosiciones:
+        num, x1, y1, x2, y2 = fila
+        
+        # Calculamos las coordenadas en la matriz resultante
+        origen = ((x1) * 10 + (y1 + 1))
+        destino = ((x2) * 10 + (y2 + 1))
+        
+        matriz_resultante.append(num)
+        matriz_resultante.append((origen,destino))
+    
+    return matriz_resultante
+
 
 # Ejemplo de uso:
 vector_final = [100, (0, 4), (1, 8), 100, (1, 2), (1, 9), 100, (3, 0), (3, 8), 100, (4, 2), (4, 5), 200, (0, 2), (0, 6), 200, (1, 0), (0, 8), 200, (1, 3), (4, 8), 300, (0, 3), (0, 9), 300, (2, 0), (1, 7), 300, (3, 2), (4, 7), 100, (1, 8), (1, 3), 100, (1, 9), (1, 4), 100, (3, 8), (3, 3), 100, (4, 5), (4, 0), 200, (0, 6), (0, 1), 200, (0, 8), (0, 3), 200, (4, 8), (4, 3), 300, (0, 9), (0, 4), 300, (1, 7), (1, 2), 300, (4, 7), (4, 2)]
