@@ -40,7 +40,8 @@ def verificarCantidades(matrizPatron,matrizSuministro):
 def encontrarPosicion(matrizPatron, matrizSuministro):
     # Se recorre la matriz patrón
     matrizPosiciones = []
-    matrizReacomodada = [] 
+    matrizReacomodada = []
+    matrizMovimientos = []
     for filaObjetivo in range(0, 5):
         for columnaObjetivo in range(0, 5):
             objeto = matrizPatron[filaObjetivo][columnaObjetivo]
@@ -59,8 +60,11 @@ def encontrarPosicion(matrizPatron, matrizSuministro):
                             matrizPosiciones.append((objeto,filaOrigen,columnaOrigen,filaObjetivo,columnaObjetivo+5))# El +5 lo acomoda en la matriz de carga
                             break
     matrizReacomodada = Decodificador.traducirPosicionesPatron(matrizPosiciones)
-    Lectura.imprimir_matriz(matrizReacomodada)
+    matrizMovimientos = Decodificador.traducirPosicionesPasos(matrizReacomodada)
+    print("Matriz codificada")
     print(matrizReacomodada)
+    print("Matriz movimientos")
+    print(matrizMovimientos)
     return (matrizReacomodada)
 
 def AcomodarPatron(matrizPatron, matrizSuministro):
