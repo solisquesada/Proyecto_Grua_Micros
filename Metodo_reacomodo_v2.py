@@ -95,15 +95,15 @@ class Reorganize:
 
         self.supply_positions = supply_cells
 
-    # This function works for codifying the tuples into numbers
-    # This works for a vector of tuples, not for dictionaries. (Easier testing)
+    # This function works for codifying the tuples nto numbers
+    # This works for a vector of tuples, not for ditionaries. (Easier testing)
     def codify_to_numbers(self, vector_object):
         reference_matrix = [
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-            [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
-            [31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
-            [41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
+            [6, 7, 8, 9, 10, 1, 2, 3, 4, 5],
+            [16, 17, 18, 19, 20, 11, 12, 13, 14, 15],
+            [26, 27, 28, 29, 30, 21, 22, 23, 24, 25],
+            [36, 37, 38, 39, 40, 31, 32, 33, 34, 35],
+            [46, 47, 48, 49, 50, 41, 42, 43, 44, 45]
         ]
         codified_numbers = []
 
@@ -125,9 +125,11 @@ class Reorganize:
 
         global_vector = []
         for val1, val2 in zip(vector1, vector2):
-            global_vector.append(type_of_data)
-            global_vector.append(val1)
-            global_vector.append(val2)
+            #  global_vector.append(type_of_data)
+            # global_vector.append(val1)
+            # global_vector.append(val2)
+            completed_value = (val1, val2)
+            global_vector.append(completed_value)
 
         return global_vector
 
@@ -192,7 +194,7 @@ def external_call_reorganized_method():
     final_vector_transmit = call_reorganize(pattern, current_set)
     return final_vector_transmit
 
-#final_vector_transmit = call_reorganize(pattern, current_set)
+final_vector_transmit = call_reorganize(pattern, current_set)
 
-#print("The final vector to transmit is: ")
-#print(final_vector_transmit)
+print("The final vector to transmit is: ")
+print(final_vector_transmit)
