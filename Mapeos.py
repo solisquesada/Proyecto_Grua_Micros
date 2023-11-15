@@ -12,10 +12,8 @@ def mapeoSuministro():
     for fila in range(5):
         for columna in range(5):
             if (fila==0 and columna==0):
-                # matrizSuministro[fila][columna]=movimientosGrua.grua((fila,columna),(fila,columna),1)
                 print("Se lee: " + str(fila) + str(columna))
             else:
-                # matrizSuministro[fila][columna]=movimientosGrua.grua((fila,columna),(fila,columna+1),1)
                 print("Se lee: " + str(fila) + str(columna))
     
     matrizSuministro=Lectura.leerSuministro("archivoSuministro.xlsx") #De momento se va a definir la matriz sumistro con un excel
@@ -36,10 +34,8 @@ def mapeoCarga():
     for fila in range(5):
         for columna in range(5):
             if (fila==0 and columna==0):
-                # matrizCarga[fila][columna]=movimientosGrua.grua((fila,columna),(fila,columna),1)
                 print("Se lee: " + str(fila) + str(columna))
             else:
-                # matrizCarga[fila][columna]=movimientosGrua.grua((fila,columna),(fila,columna+1),1)
                 print("Se lee: " + str(fila) + str(columna))
     
     matrizCarga=[[None for _ in range(5)] for _ in range(5)] #De momento se va define manualmente la matriz carga

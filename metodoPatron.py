@@ -65,7 +65,7 @@ def encontrarPosicion(matrizPatron, matrizSuministro):
     print(matrizReacomodada)
     print("Matriz movimientos")
     print(matrizMovimientos)
-    return (matrizReacomodada)
+    return (matrizMovimientos)
 
 def AcomodarPatron(matrizPatron, matrizSuministro):
     #Se pide la matriz con el orden del suministrio y donde van ubicados los objetos.
