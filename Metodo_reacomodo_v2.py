@@ -1,17 +1,19 @@
 import Lectura
+import Decodificador
+import mapeoCamara
 
 file_archive = "archivoPatron.xlsx"  # File name must be known
 pattern, error = Lectura.leerPatron(file_archive)  # Pattern is the desire/final pattern for this method
 
 # The current set comes from the "mapeo" function
-current_set = [
-    [100, None, 200, 300, 100],
-    [200, None, 100, 200, None],
-    [300, None, None, None, None],
-    [100, 100, 300, None, 100],
-    [None, None, 100, None, 300]
-]
-
+# current_set = [
+#    [100, None, 200, 300, 100],
+#    [200, None, 100, 200, None],
+#    [300, None, None, None, None],
+#    [100, 100, 300, None, 100],
+#    [None, None, 100, None, 300]
+# ]
+trash, current_set = mapeoCamara.mapeo()
 
 # Now the entries for this method are the desire pattern and the actual pattern
 
@@ -186,15 +188,18 @@ class Reorganize:
 def call_reorganize(pattern, file_archive):
     reorganize_data = Reorganize(pattern, file_archive)
     final_vector_return = reorganize_data.reorganized_data()
+    final_vector_for_returning = Decodificador.traducirPosicionesPasos(final_vector_return)
 
-    return final_vector_return
+    return final_vector_for_returning
 
 # This function works for an external call, coming from other python archive
 def external_call_reorganized_method():
     final_vector_transmit = call_reorganize(pattern, current_set)
     return final_vector_transmit
 
-final_vector_transmit = call_reorganize(pattern, current_set)
+# final_vector_transmit = call_reorganize(pattern, current_set)
+# print("The final vector to transmit is: ")
+# print(final_vector_transmit)
 
-print("The final vector to transmit is: ")
-print(final_vector_transmit)
+# final = external_call_reorganized_method()
+# print(final)
