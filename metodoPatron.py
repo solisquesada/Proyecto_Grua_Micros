@@ -32,8 +32,12 @@ def verificarCantidades(matrizPatron,matrizSuministro):
     # Se verifica que el material sea exacto al cerrar en 0
     if (ADisponible != 0 or BDisponible != 0 or CDisponible != 0):
         print ("\nLa cantidad de materiales disponibles y necesitados no son iguales")
-        Error = 201 # Se define el código 201 como error por material
-        return (Error)
+        if (ADisponible > 0 or BDisponible > 0 or CDisponible > 0):
+            Error = 203 # Se define el código 203 como error por exceso de material
+            return (Error)
+        else:
+            Error = 201 # Se define el código 201 como error por falta material
+            return (Error)
     else:
         print ("\nSe ha suministrado la cantidad correcta de material :)")
         return (0)
@@ -78,7 +82,7 @@ def verificarCarga(matrizCarga):
     for fila in range(0, 5):
         for columna in range(0, 5):
             if (matrizCarga[fila][columna] != None):
-                Error = 202
+                Error = 202     # Se define el error 202 como obtaculo en carga
                 return Error
     return (0)
 
