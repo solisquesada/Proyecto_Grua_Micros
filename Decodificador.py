@@ -39,13 +39,13 @@ def traducirPosicionesPatron(matrizPosiciones):
     matriz_resultante = []
     
     for fila in matrizPosiciones:
-        num, x1, y1, x2, y2 = fila
+        x1, y1, x2, y2 = fila
         
         # Calculamos las coordenadas en la matriz resultante
         origen = ((x1) * 10 + (y1 + 1))
         destino = ((x2) * 10 + (y2 + 1))
         
-        matriz_resultante.append((origen,destino))
+        matriz_resultante.append((origen, destino))
     
     return matriz_resultante
 

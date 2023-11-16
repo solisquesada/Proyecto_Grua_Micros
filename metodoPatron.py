@@ -2,6 +2,7 @@ import Lectura
 import Mapeos
 import movimientosGrua
 import Decodificador
+import mapeoCamara
 
 def verificarCantidades(matrizPatron,matrizSuministro):
     ADisponible = 0
@@ -57,7 +58,7 @@ def encontrarPosicion(matrizPatron, matrizSuministro):
                         if (matrizSuministro[filaOrigen][columnaOrigen]==objeto):
                             print("Se encontró la ubicación ideal del objeto " + str(objeto) + " en: " + str(filaObjetivo+1) + "," + str(columnaObjetivo+1))
                             matrizSuministro[filaOrigen][columnaOrigen]=None
-                            matrizPosiciones.append((objeto,filaOrigen,columnaOrigen,filaObjetivo,columnaObjetivo+5))# El +5 lo acomoda en la matriz de carga
+                            matrizPosiciones.append((filaOrigen, columnaOrigen, filaObjetivo, columnaObjetivo+5))# El +5 lo acomoda en la matriz de carga
                             break
     matrizReacomodada = Decodificador.traducirPosicionesPatron(matrizPosiciones)
     matrizMovimientos = Decodificador.traducirPosicionesPasos(matrizReacomodada)
@@ -73,11 +74,42 @@ def AcomodarPatron(matrizPatron, matrizSuministro):
     movimientosGrua.gruaReal(matrizPosiciones)
     return matrizPosiciones
 
+def verificarCarga(matrizCarga):
+    for fila in range(0, 5):
+        for columna in range(0, 5):
+            if (matrizCarga[fila][columna] != None):
+                Error = 202
+                return Error
+    return (0)
+
+def vaciarBasura():
+    xBasura = 1
+    yBasura = 5
+    basura = []
+    movimientosBasura = []
+    basuraCodificada = []
+    matrizSuministro, matrizCarga = mapeoCamara.mapeo()
+    
+    for fila in range(0, 5):
+        for columna in range(0, 5):
+            if (matrizCarga[fila][columna] != None):
+                print("\nSe encontró basura en:")
+                print(fila, columna + 6)
+                basura.append((fila, columna+5, yBasura, xBasura))
+                xBasura =+ 1
+    
+    print(basura)
+    basura = Decodificador.traducirPosicionesPatron(basura)
+    movimientosBasura = Decodificador.traducirPosicionesPasos(basura)
+
+    return(movimientosBasura)
+
 def metodoPatron():
+    matrizPosiciones = []
     print("\nEmpezando el método patrón\n")
     # Se inicializa el error en 0.
     Error = 0
-    
+
     # Se leen los datos proporcionados por el usuario en el excel dado:
     archivoPatron = "archivoPatron.xlsx"
 
@@ -86,28 +118,32 @@ def metodoPatron():
     matrizPatron, Error = Lectura.leerPatron(archivoPatron)
     if (Error != 0):
         print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
-        return
+        return Error, matrizPosiciones
     
     # Se realiza el mapeo del área de suministro y del área de carga para asegurar
     # que se tiene el material adecuado y no hay basura.
-    print("\nSe lee suministro\n")
-    matrizSuministro = Mapeos.mapeoSuministro()
-
-    print("\nSe lee carga\n")
-    matrizCarga = Mapeos.mapeoCarga()
+    print("\nSe lee suministro y carga\n")
+    matrizSuministro, matrizCarga = mapeoCamara.mapeo()
     
+    # Se verifica que la zona de carga esté vacía:
+    print("\nSe verifica la zona de carga\n")
+    Error = verificarCarga(matrizCarga)
+    if (Error != 0):
+        print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
+        return Error, matrizPosiciones
+
     # Se verifica que la cantidad de objetos necesarios sea igual a la cantidad suministrada:
     print("\nSe verifica la cantidad de material\n")
     Error = verificarCantidades(matrizPatron, matrizSuministro)
     if (Error != 0):
         print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
-        return
+        return Error, matrizPosiciones
     
     # Se procede a acomodar los materiales del suministro a la carga
     print("\nSe acomoda el material\n")
     matrizPosiciones = AcomodarPatron(matrizPatron, matrizSuministro)
 
     print("\nSe concluyó con éxito el método patrón :)")
-    return matrizPosiciones
+    return Error, matrizPosiciones
 
 metodoPatron()
