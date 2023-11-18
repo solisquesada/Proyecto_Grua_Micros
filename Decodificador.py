@@ -1,5 +1,3 @@
-from icecream import ic
-
 # Vector final
 vector_final = [100, (1, 2), (1, 9), 100, (3, 0), (3, 8), 100, (4, 2), (4, 5), 100,
                 (0, 2), (0, 6), 200, (1, 0), (0, 8), 200, (1, 3), (4, 8), 200, (0, 3), (0, 9), 300,
@@ -77,9 +75,9 @@ def traducirPosicionesPasos(matrizPosiciones):
         print(posicionX,posicionY)
         # Calculamos los pasos para ir de la posición actual al destino
         print("Destino en pasos")
-        DestinoXPasos = round((((destino % 10) + 9) if destino % 10 == 0 else ((destino % 10) - 1)) * (8400/19))
+        DestinoXPasos = round((((destino % 10) + 9) if destino % 10 == 0 else ((destino % 10) - 1)) * (445))
         print(DestinoXPasos)
-        DestinoYPasos = round((destino // 10) * (8400/19))
+        DestinoYPasos = round((destino // 10) * (445))
         print(DestinoYPasos)
         movimientoXDestino = DestinoXPasos-posicionX
         movimientoYDestino = DestinoYPasos-posicionY

@@ -4,7 +4,7 @@ import cv2
 
 def tomarFoto(coordenadas):
     # Inicializa la cámara
-    cap = cv2.VideoCapture(1)  # 0 para la cámara predeterminada
+    cap = cv2.VideoCapture(0)  # 0 para la cámara predeterminada
 
     # Verifica si la cámara se abrió correctamente
     if not cap.isOpened():
@@ -35,13 +35,13 @@ def tomarFoto(coordenadas):
 
     if ret:
         # Guarda la imagen en un archivo
-        cv2.imwrite("captura.jpg", frame)
+        cv2.imwrite("captura1.jpg", frame)
         print("Imagen guardada como 'captura.jpg'")
     else:
         print("No se pudo capturar la imagen")
 
     # Abre la imagen
-    imagen = Image.open("captura.jpg")
+    imagen = Image.open("captura1.jpg")
     return(imagen)
 
 # Función para comparar el color de un píxel con tolerancia (opcional)
@@ -98,7 +98,7 @@ def calibracion(coordenadas, imagen):
 
 def verCamara(coordenadas, colores):
     # Inicializa la cámara
-    cap = cv2.VideoCapture(1)  # 0 para la cámara predeterminada
+    cap = cv2.VideoCapture(0)  # 0 para la cámara predeterminada
 
     # Verifica si la cámara se abrió correctamente
     if not cap.isOpened():
@@ -187,13 +187,13 @@ def verCamara(coordenadas, colores):
     cap.release()
     if ret:
         # Guarda la imagen en un archivo
-        # cv2.imwrite("captura.jpg", frame)
+        # cv2.imwrite("captura1.jpg", frame)
         # print("Imagen guardada como 'captura.jpg'")
         print("Cámara cerrada")
     else:
         print("No se pudo capturar la imagen")
     cv2.destroyAllWindows()
-    # tomarFoto()
+    #tomarFoto(coordenadas)
 
 ##################################################
 #  FUNCIONAMIENTO
@@ -202,11 +202,11 @@ def verCamara(coordenadas, colores):
 def mapeo():
     # Se definen las coordenadas de los pixeles a analizar:
     # La imagen tiene una resolución de 1920x1080 píxeles
-    coordenadas = [(270, 250), (270, 405), (270, 570), (270, 725), (270, 880), (270, 1035), (270, 1190), (270, 1345), (270, 1500), (270, 1655),
-                   (425, 250), (425, 405), (425, 570), (425, 725), (425, 880), (425, 1035), (425, 1190), (425, 1345), (425, 1500), (425, 1655),
-                   (580, 250), (580, 405), (580, 570), (580, 725), (580, 880), (580, 1035), (580, 1190), (580, 1345), (580, 1500), (580, 1655),
-                   (735, 250), (735, 405), (735, 570), (735, 725), (735, 880), (735, 1035), (735, 1190), (735, 1345), (735, 1500), (735, 1655),
-                   (890, 250), (890, 405), (890, 570), (890, 725), (890, 880), (890, 1035), (890, 1190), (890, 1345), (890, 1500), (890, 1655),]
+    coordenadas = [(270, 240), (270, 405), (270, 570), (270, 731), (270, 885), (270, 1042), (270, 1190), (270, 1345), (270, 1495), (270, 1640),
+                   (425, 240), (425, 405), (425, 570), (425, 731), (425, 885), (425, 1042), (425, 1190), (425, 1345), (425, 1495), (425, 1640),
+                   (580, 240), (580, 405), (580, 570), (580, 731), (580, 885), (580, 1042), (580, 1190), (580, 1345), (580, 1495), (580, 1640),
+                   (735, 240), (735, 405), (735, 570), (735, 731), (735, 885), (735, 1042), (735, 1190), (735, 1345), (735, 1495), (735, 1640),
+                   (890, 240), (890, 405), (890, 570), (890, 731), (890, 885), (890, 1042), (890, 1190), (890, 1345), (890, 1495), (890, 1640),]
 
     matrizSuministro = [[None for _ in range(5)] for _ in range(5)]
     matrizCarga = [[None for _ in range(5)] for _ in range(5)]
@@ -228,7 +228,9 @@ def mapeo():
 
     # Verifica los colores en las coordenadas especificadas
     i=1
-    # imagen = tomarFoto()
+    verCamara(coordenadas, colores)
+    imagen = tomarFoto(coordenadas)
+    # imagen = Image.open("captura1.jpg")
     print("COMRPOBACIÓN CON NUEVA IMAGEN")
     for coordenada in coordenadas:
         y, x = coordenada  # Intercambia el orden de las coordenadas

@@ -1,8 +1,8 @@
-import Lectura
-import Mapeos
-import movimientosGrua
 import Decodificador
 import mapeoCamara
+import UART_write
+import Decodificador
+import Lectura
 
 def verificarCantidades(matrizPatron,matrizSuministro):
     ADisponible = 0
@@ -45,25 +45,31 @@ def verificarCantidades(matrizPatron,matrizSuministro):
 def encontrarPosicion(matrizPatron, matrizSuministro):
     # Se recorre la matriz patrón
     matrizPosiciones = []
-    matrizReacomodada = []
-    matrizMovimientos = []
-    for filaObjetivo in range(0, 5):
-        for columnaObjetivo in range(0, 5):
-            objeto = matrizPatron[filaObjetivo][columnaObjetivo]
+    for filaPatron in range(0, 5):
+        for columnaPatron in range(0, 5):
+            objeto = matrizPatron[filaPatron][columnaPatron]
+
             # Para los lugares donde hay un objeto en el patrón se encuentra cual objeto
             # del suministro puede cumplir.
             if (objeto != None):
+                encontrado = False
                 print("\nObjeto: " + str(objeto))
                 # Se recorre la matriz suministro verificando que se trate de un material
                 # que no se haya utilizado aún.
 
-                for filaOrigen in range(5):
-                    for columnaOrigen in range (5):
-                        if (matrizSuministro[filaOrigen][columnaOrigen]==objeto):
-                            print("Se encontró la ubicación ideal del objeto " + str(objeto) + " en: " + str(filaObjetivo+1) + "," + str(columnaObjetivo+1))
-                            matrizSuministro[filaOrigen][columnaOrigen]=None
-                            matrizPosiciones.append((filaOrigen, columnaOrigen, filaObjetivo, columnaObjetivo+5))# El +5 lo acomoda en la matriz de carga
+                for filaSuministro in range(0, 5):
+                    for columnaSuministro in range (0, 5):
+                        if (matrizSuministro[filaSuministro][columnaSuministro]==objeto):
+                            print("Se encontró la ubicación ideal del objeto " + str(objeto) + " en: " + str(filaPatron+1) + "," + str(columnaPatron+1) + 
+                                  " desde: " + str(filaSuministro) + "," + str(columnaSuministro))
+                            print((filaSuministro, columnaSuministro, filaPatron, columnaPatron+5))
+                            matrizSuministro[filaSuministro][columnaSuministro] = None
+                            matrizPosiciones.append((filaSuministro, columnaSuministro, filaPatron, columnaPatron+5))# El +5 lo acomoda en la matriz de carga
+                            encontrado = True
                             break
+                    if (encontrado):
+                        break
+
     matrizReacomodada = Decodificador.traducirPosicionesPatron(matrizPosiciones)
     matrizMovimientos = Decodificador.traducirPosicionesPasos(matrizReacomodada)
     print("Matriz codificada")
@@ -71,12 +77,6 @@ def encontrarPosicion(matrizPatron, matrizSuministro):
     print("Matriz movimientos")
     print(matrizMovimientos)
     return (matrizMovimientos)
-
-def AcomodarPatron(matrizPatron, matrizSuministro):
-    #Se pide la matriz con el orden del suministrio y donde van ubicados los objetos.
-    matrizPosiciones = encontrarPosicion(matrizPatron, matrizSuministro)
-    movimientosGrua.gruaReal(matrizPosiciones)
-    return matrizPosiciones
 
 def verificarCarga(matrizCarga):
     for fila in range(0, 5):
@@ -91,7 +91,6 @@ def vaciarBasura():
     yBasura = 5
     basura = []
     movimientosBasura = []
-    basuraCodificada = []
     matrizSuministro, matrizCarga = mapeoCamara.mapeo()
     
     for fila in range(0, 5):
@@ -107,6 +106,20 @@ def vaciarBasura():
     movimientosBasura = Decodificador.traducirPosicionesPasos(basura)
 
     return(movimientosBasura)
+
+def AcomodarPatron(matrizPasos):
+    flagM = 0
+    for movimiento in matrizPasos:
+        if (flagM == 0):
+            Error = UART_write.enviarMovimiento(movimiento)
+            flagM = 1
+        else:
+            Error = UART_write.enviarMovimiento(-movimiento)
+            flagM = 0
+            
+        if (Error != 0):
+            return (Error)
+    return(0)
 
 def metodoPatron():
     matrizPosiciones = []
@@ -144,8 +157,13 @@ def metodoPatron():
         return Error, matrizPosiciones
     
     # Se procede a acomodar los materiales del suministro a la carga
+    matrizMovimientos = encontrarPosicion(matrizPatron, matrizSuministro)
     print("\nSe acomoda el material\n")
-    matrizPosiciones = AcomodarPatron(matrizPatron, matrizSuministro)
+    Error = AcomodarPatron(matrizMovimientos)
+    # Se verifica que los movimientos se hicieron correctamente
+    if (Error != 0):
+        print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
+        return Error, matrizPosiciones
 
     print("\nSe concluyó con éxito el método patrón :)")
     return Error, matrizPosiciones
