@@ -228,9 +228,9 @@ def mapeo():
 
     # Verifica los colores en las coordenadas especificadas
     i=1
-    verCamara(coordenadas, colores)
-    imagen = tomarFoto(coordenadas)
-    # imagen = Image.open("captura1.jpg")
+    # verCamara(coordenadas, colores)
+    # imagen = tomarFoto(coordenadas)
+    imagen = Image.open("captura1.jpg")
     print("COMRPOBACIÓN CON NUEVA IMAGEN")
     for coordenada in coordenadas:
         y, x = coordenada  # Intercambia el orden de las coordenadas

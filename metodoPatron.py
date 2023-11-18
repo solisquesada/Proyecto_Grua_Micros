@@ -159,7 +159,7 @@ def metodoPatron():
     # Se procede a acomodar los materiales del suministro a la carga
     matrizMovimientos = encontrarPosicion(matrizPatron, matrizSuministro)
     print("\nSe acomoda el material\n")
-    Error = AcomodarPatron(matrizMovimientos)
+    # Error = AcomodarPatron(matrizMovimientos)
     # Se verifica que los movimientos se hicieron correctamente
     if (Error != 0):
         print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")

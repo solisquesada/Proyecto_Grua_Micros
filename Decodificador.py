@@ -63,9 +63,9 @@ def traducirPosicionesPasos(matrizPosiciones):
         print(origen,destino)
         # Calculamos los pasos para ir de la posición actual a origen
         print("Origen en pasos")
-        OrigenXPasos = round((((origen % 10) + 9) if origen % 10 == 0 else ((origen % 10) - 1)) * (8400/19))
+        OrigenXPasos = round((((origen % 10) + 9) if origen % 10 == 0 else ((origen % 10) - 1)) * (445))
         print(OrigenXPasos)
-        OrigenYPasos = round((origen // 10) * (8400/19))
+        OrigenYPasos = round((((origen // 10) - 1) * (445)) if origen % 10 == 0 else (origen // 10) * (445))
         print(OrigenYPasos)
         movimientoXOrigen = OrigenXPasos-posicionX
         movimientoYOrigen = OrigenYPasos-posicionY
@@ -77,7 +77,7 @@ def traducirPosicionesPasos(matrizPosiciones):
         print("Destino en pasos")
         DestinoXPasos = round((((destino % 10) + 9) if destino % 10 == 0 else ((destino % 10) - 1)) * (445))
         print(DestinoXPasos)
-        DestinoYPasos = round((destino // 10) * (445))
+        DestinoYPasos = round((((destino // 10) - 1) * (445)) if destino % 10 == 0 else (destino // 10) * (445))
         print(DestinoYPasos)
         movimientoXDestino = DestinoXPasos-posicionX
         movimientoYDestino = DestinoYPasos-posicionY
@@ -96,18 +96,18 @@ def traducirPosicionesPasos(matrizPosiciones):
 
 
 # Ejemplo de uso:
-vector_final = [100, (0, 4), (1, 8), 100, (1, 2), (1, 9), 100, (3, 0), (3, 8), 100, (4, 2), (4, 5), 200, (0, 2), (0, 6), 200, (1, 0), (0, 8), 200, (1, 3), (4, 8), 300, (0, 3), (0, 9), 300, (2, 0), (1, 7), 300, (3, 2), (4, 7), 100, (1, 8), (1, 3), 100, (1, 9), (1, 4), 100, (3, 8), (3, 3), 100, (4, 5), (4, 0), 200, (0, 6), (0, 1), 200, (0, 8), (0, 3), 200, (4, 8), (4, 3), 300, (0, 9), (0, 4), 300, (1, 7), (1, 2), 300, (4, 7), (4, 2)]
+# vector_final = [100, (0, 4), (1, 8), 100, (1, 2), (1, 9), 100, (3, 0), (3, 8), 100, (4, 2), (4, 5), 200, (0, 2), (0, 6), 200, (1, 0), (0, 8), 200, (1, 3), (4, 8), 300, (0, 3), (0, 9), 300, (2, 0), (1, 7), 300, (3, 2), (4, 7), 100, (1, 8), (1, 3), 100, (1, 9), (1, 4), 100, (3, 8), (3, 3), 100, (4, 5), (4, 0), 200, (0, 6), (0, 1), 200, (0, 8), (0, 3), 200, (4, 8), (4, 3), 300, (0, 9), (0, 4), 300, (1, 7), (1, 2), 300, (4, 7), (4, 2)]
 
-matriz_resultante, matriz_resultante2 = generar_matriz(vector_final)
+# matriz_resultante, matriz_resultante2 = generar_matriz(vector_final)
 
-print("ESTAS MATRICES NO TIENEN LOS VALORES BIEN COLOCADOS")
-print("Matriz de posiciones iniciales y a donde van en suministro")
-for fila in matriz_resultante:
-    print(fila)
-print("")
-print("Matriz donde estan en suministro y a donde deberian ir")
-for fila in matriz_resultante2:
-    print(fila)
+# print("ESTAS MATRICES NO TIENEN LOS VALORES BIEN COLOCADOS")
+# print("Matriz de posiciones iniciales y a donde van en suministro")
+# for fila in matriz_resultante:
+    # print(fila)
+# print("")
+# print("Matriz donde estan en suministro y a donde deberian ir")
+# for fila in matriz_resultante2:
+    # print(fila)
 
 
 
