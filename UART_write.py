@@ -9,7 +9,13 @@ def enviarMovimiento(movimiento):
 
         data = str(movimiento)
         ser.write(data.encode('utf-8'))
-        time.sleep(10)
+        if movimiento == 5:
+            time.sleep(7)
+        else:
+            time.sleep(3)
+            
+            
+        
             
         if ser.in_waiting > 0:
             received_data = ser.readline().decode('utf-8').strip()
@@ -23,4 +29,4 @@ def enviarMovimiento(movimiento):
             
     except:
         ser.close()
-    print("Serial port closed.")
+    print("Serial port c losed.")

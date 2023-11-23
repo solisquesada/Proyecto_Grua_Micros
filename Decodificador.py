@@ -51,7 +51,6 @@ def traducirPosicionesPasos(matrizPosiciones):
     matriz_resultante = []
     posicionX = 0
     posicionY = 0
-    matrizPosiciones.append((0,0))
 
     for movimiento in matrizPosiciones:
         print("\nMovimiento:")
@@ -89,8 +88,33 @@ def traducirPosicionesPasos(matrizPosiciones):
         print([movimientoXOrigen,movimientoYOrigen,movimientoXDestino,movimientoYDestino])
         matriz_resultante.append(movimientoXOrigen)
         matriz_resultante.append(movimientoYOrigen)
+        matriz_resultante.append(-1)
         matriz_resultante.append(movimientoXDestino)
         matriz_resultante.append(movimientoYDestino)
+        matriz_resultante.append(-1)
+    
+    print("\VOLVIENDO A ORIGEN:")
+    origen = 1
+    print("Posición Actual Pasos")
+    print(posicionX,posicionY)
+    print("Origen Codificado")
+    print(origen)
+    # Calculamos los pasos para ir de la posición actual a origen
+    print("Origen en pasos")
+    OrigenXPasos = round((((origen % 10) + 9) if origen % 10 == 0 else ((origen % 10) - 1)) * (445))
+    print(OrigenXPasos)
+    OrigenYPasos = round((((origen // 10) - 1) * (445)) if origen % 10 == 0 else (origen // 10) * (445))
+    print(OrigenYPasos)
+    movimientoXOrigen = OrigenXPasos-posicionX
+    movimientoYOrigen = OrigenYPasos-posicionY
+    posicionX = posicionX + movimientoXOrigen
+    posicionY = posicionY + movimientoYOrigen
+    print("1-Nueva Posición:")
+    print(posicionX,posicionY)
+    print("Pasos requeridos para este movimiento:")
+    print([movimientoXOrigen,movimientoYOrigen,movimientoXDestino,movimientoYDestino])
+    matriz_resultante.append(movimientoXOrigen)
+    matriz_resultante.append(movimientoYOrigen)
     
     return matriz_resultante
 

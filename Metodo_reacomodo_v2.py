@@ -181,6 +181,8 @@ class Reorganize:
         vector_mix = [A_part_1, B_part_1, C_part_1, A_part_2, B_part_2, C_part_2]
 
         final_vector_codified = self.final_vector(vector_mix)
+        print(final_vector_codified)
+
 
         return final_vector_codified
 
@@ -188,6 +190,12 @@ class Reorganize:
 def call_reorganize(pattern, file_archive):
     reorganize_data = Reorganize(pattern, file_archive)
     final_vector_return = reorganize_data.reorganized_data()
+    print("patron")
+    print(pattern)
+    print("actual")
+    print(file_archive)
+    print("1000000000000000000000000")
+    print(final_vector_return)
     final_vector_for_returning = Decodificador.traducirPosicionesPasos(final_vector_return)
 
     return final_vector_for_returning
@@ -197,9 +205,9 @@ def external_call_reorganized_method():
     final_vector_transmit = call_reorganize(pattern, current_set)
     return final_vector_transmit
 
-# final_vector_transmit = call_reorganize(pattern, current_set)
-# print("The final vector to transmit is: ")
-# print(final_vector_transmit)
+final_vector_transmit = call_reorganize(pattern, current_set)
+print("The final vector to transmit is: ")
+print(final_vector_transmit)
 
 # final = external_call_reorganized_method()
 # print(final)

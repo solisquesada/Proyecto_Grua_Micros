@@ -1,7 +1,5 @@
 import Decodificador
 import mapeoCamara
-import UART_write
-import Decodificador
 import Lectura
 
 def verificarCantidades(matrizPatron,matrizSuministro):
@@ -107,21 +105,7 @@ def vaciarBasura():
 
     return(movimientosBasura)
 
-def AcomodarPatron(matrizPasos):
-    flagM = 0
-    for movimiento in matrizPasos:
-        if (flagM == 0):
-            Error = UART_write.enviarMovimiento(movimiento)
-            flagM = 1
-        else:
-            Error = UART_write.enviarMovimiento(-movimiento)
-            flagM = 0
-            
-        if (Error != 0):
-            return (Error)
-    return(0)
-
-def metodoPatron():
+def metodoPatron1():
     matrizPosiciones = []
     print("\nEmpezando el método patrón\n")
     # Se inicializa el error en 0.
@@ -166,6 +150,7 @@ def metodoPatron():
         return Error, matrizPosiciones
 
     print("\nSe concluyó con éxito el método patrón :)")
-    return Error, matrizPosiciones
+    print(matrizMovimientos)
+    return Error, matrizMovimientos
 
-metodoPatron()
+metodoPatron1()
