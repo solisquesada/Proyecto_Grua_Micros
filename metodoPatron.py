@@ -6,6 +6,7 @@ def verificarCantidades(matrizPatron,matrizSuministro):
     ADisponible = 0
     BDisponible = 0
     CDisponible = 0
+    
     # Se define la cantidad de objetos necesarios para el patron
     for filaPatron in range(5):
         for columnaPatron in range(5):
@@ -54,21 +55,25 @@ def encontrarPosicion(matrizPatron, matrizSuministro):
                 print("\nObjeto: " + str(objeto))
                 # Se recorre la matriz suministro verificando que se trate de un material
                 # que no se haya utilizado aún.
-
+                # La bandera encontrado ayuda a hacer el break del segundo ciclo
                 for filaSuministro in range(0, 5):
                     for columnaSuministro in range (0, 5):
                         if (matrizSuministro[filaSuministro][columnaSuministro]==objeto):
                             print("Se encontró la ubicación ideal del objeto " + str(objeto) + " en: " + str(filaPatron+1) + "," + str(columnaPatron+1) + 
                                   " desde: " + str(filaSuministro) + "," + str(columnaSuministro))
                             print((filaSuministro, columnaSuministro, filaPatron, columnaPatron+5))
+                            # El objeto encontrado se sustituye por un None para no utilizarlo múltiples veces
                             matrizSuministro[filaSuministro][columnaSuministro] = None
+                            # Se agregan las coordenadas a la matriz de posiciones
                             matrizPosiciones.append((filaSuministro, columnaSuministro, filaPatron, columnaPatron+5))# El +5 lo acomoda en la matriz de carga
                             encontrado = True
                             break
                     if (encontrado):
                         break
-
+    
+    # Se traducen las coordenadas a posiciones codificadas del 1-50
     matrizReacomodada = Decodificador.traducirPosicionesPatron(matrizPosiciones)
+    # Se traducen los origenes y destinos codificados a pasos
     matrizMovimientos = Decodificador.traducirPosicionesPasos(matrizReacomodada)
     print("Matriz codificada")
     print(matrizReacomodada)
@@ -77,6 +82,7 @@ def encontrarPosicion(matrizPatron, matrizSuministro):
     return (matrizMovimientos)
 
 def verificarCarga(matrizCarga):
+    # Carga debería estar libre por lo que si se encuentra algo distinto a None, devuelve un código de error
     for fila in range(0, 5):
         for columna in range(0, 5):
             if (matrizCarga[fila][columna] != None):
@@ -84,47 +90,56 @@ def verificarCarga(matrizCarga):
                 return Error
     return (0)
 
-def vaciarBasura():
-    xBasura = 1
-    yBasura = 5
+def vaciarBasura(matrizCarga):
+    # Se define la casilla inicial para la basura. Solo son 10 espacios por lo que en y no se varía
+    xBasura = 0
+    yBasura = 6
     basura = []
     movimientosBasura = []
-    matrizSuministro, matrizCarga = mapeoCamara.mapeo()
-    
+    # Por cada objeto en carga, se le asigna un lugar en la basura
     for fila in range(0, 5):
         for columna in range(0, 5):
             if (matrizCarga[fila][columna] != None):
                 print("\nSe encontró basura en:")
                 print(fila, columna + 6)
                 basura.append((fila, columna+5, yBasura, xBasura))
-                xBasura =+ 1
+                xBasura = xBasura + 1
     
     print(basura)
+    # Se traducen las coordenadas a posiciones codificadas
     basura = Decodificador.traducirPosicionesPatron(basura)
+    # Se traducen los origenes y destinos codificados a pasos
     movimientosBasura = Decodificador.traducirPosicionesPasos(basura)
 
     return(movimientosBasura)
 
-def metodoPatron1():
+def metodoPatron1(matrizPatron, matrizSuministro, matrizCarga):
+    matrizSuministro2 = []
+    for elemento in matrizSuministro:
+        matrizSuministro2.append(elemento)
+    print("ll")
+    print(matrizSuministro2)
+    
+    
     matrizPosiciones = []
     print("\nEmpezando el método patrón\n")
     # Se inicializa el error en 0.
     Error = 0
 
     # Se leen los datos proporcionados por el usuario en el excel dado:
-    archivoPatron = "archivoPatron.xlsx"
+    # archivoPatron = "archivoPatron.xlsx"
 
     # Se realiza la lectura del excel con el patron que se desea realizar
-    print("\nSe lee el patrón\n")
-    matrizPatron, Error = Lectura.leerPatron(archivoPatron)
-    if (Error != 0):
-        print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
-        return Error, matrizPosiciones
+    # print("\nSe lee el patrón\n")
+    # matrizPatron, Error = Lectura.leerPatron(archivoPatron)
+    # if (Error != 0):
+        # print("ERROR: " + str(Error) + " INTENTELO MÁS TARDE.")
+        # return Error, matrizPosiciones
     
     # Se realiza el mapeo del área de suministro y del área de carga para asegurar
     # que se tiene el material adecuado y no hay basura.
-    print("\nSe lee suministro y carga\n")
-    matrizSuministro, matrizCarga = mapeoCamara.mapeo()
+    # print("\nSe lee suministro y carga\n")
+    # matrizSuministro, matrizCarga = mapeoCamara.mapeo()
     
     # Se verifica que la zona de carga esté vacía:
     print("\nSe verifica la zona de carga\n")
@@ -150,7 +165,6 @@ def metodoPatron1():
         return Error, matrizPosiciones
 
     print("\nSe concluyó con éxito el método patrón :)")
+    print(matrizSuministro)
     print(matrizMovimientos)
     return Error, matrizMovimientos
-
-metodoPatron1()
